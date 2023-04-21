@@ -18,7 +18,7 @@ pipeline {
 
     stage('Apply') {
       steps {
-        input "Deploy infrastructure? Type 'deploy' to proceed."
+        input "Deploy infrastructurstepse? Type 'deploy' to proceed."
         withAWS(credentials: 'jenkins_aws_user') { 
           sh 'terraform apply -auto-approve'
         }
@@ -26,7 +26,9 @@ pipeline {
     }
 
     stage('Destroy') {
-      when {
+      when {how to push a docker image in a  ec2 instance using a jenkinspipeline
+
+
         input 'Are you sure you want to destroy infrastructure? Type "destroy" to proceed.'
       }
       teps {
