@@ -149,3 +149,7 @@ resource "aws_api_gateway_integration_response" "devops_integration_response" {
   http_method = aws_api_gateway_method.microservice_method.http_method
   status_code = aws_api_gateway_method_response.devops_method_response.status_code
 }
+
+resource "aws_ecr_repository" "microservice" {
+  name = "microservice"
+}
