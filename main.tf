@@ -56,6 +56,12 @@ resource "aws_instance" "microservice" {
   user_data = <<-EOF
               #!/bin/bash
               # Install and configure your microservice here
+              sudo yum update -y
+              sudo amazon-linux-extras install docker
+              sudo service docker start
+              sudo usermod -a -G docker ec2-user
+              docker info
+
               EOF
 
   vpc_security_group_ids = [aws_security_group.microservice_sg.id]
