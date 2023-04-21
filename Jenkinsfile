@@ -1,55 +1,37 @@
 pipeline {
   agent any
-  triggers {
-    githubPush()
-  }
-  environment {
-    AWS_ACCESS_KEY_ID     = credentials('aws-access-key')
-    AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key')
-  }
+
+      // environment {
+      //   AWS_ACCESS_KEY_ID = credentials('jenkins_aws_user').AWS_ACCESS_KEY_ID
+      //   AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_user').AWS_SECRET_ACCESS_KEY
+      // }
 
   stages {
-    stage('Initialize') {
-      steps {
-        sh 'terraform init'
-      }
-    }
-
     stage('Plan') {
       steps {
-        script {
-          def plan_output = sh (
-            script: 'terraform plan -input=false -out=tfplan',
-            returnStdout: true
-          )
-          echo "Plan output:\n${plan_output}"
-          writeFile file: 'terraform-plan.json', text: plan_output
+        withAWS(credentials: 'aws-credentials') {
+          sh 'terraform init'
+          sh 'terraform plan'
         }
       }
     }
 
     stage('Apply') {
       steps {
-        input message: 'Do you want to apply the changes?', ok: 'Yes', parameters: [
-          booleanParam(defaultValue: false, description: 'Destroy all resources?', name: 'destroy')
-        ]
-        script {
-          def destroy = params.destroy ? '-destroy' : ''
-          sh "terraform apply -input=false ${destroy} -auto-approve tfplan"
+        input "Deploy infrastructure? Type 'deploy' to proceed."
+        withAWS(credentials: 'jenkins_aws_user') { 
+          sh 'terraform apply -auto-approve'
         }
       }
     }
 
     stage('Destroy') {
-      steps {
-        input message: 'Do you want to destroy all resources?', ok: 'Yes', parameters: [
-          booleanParam(defaultValue: false, description: 'Destroy all resources?', name: 'destroy')
-        ]
-        when {
-          expression { params.destroy }
-        }
-        steps {
-          sh 'terraform destroy -input=false -auto-approve'
+      when {
+        input 'Are you sure you want to destroy infrastructure? Type "destroy" to proceed.'
+      }
+      teps {
+        withAWS(credentials: 'jenkins_aws_user') {
+          sh 'terraform destroy'
         }
       }
     }
