@@ -7,6 +7,7 @@ pipeline {
       // }
 
   stages {
+
     stage('Plan') {
       steps {
         withAWS(credentials: 'aws-credentials') {
@@ -26,12 +27,10 @@ pipeline {
     }
 
     stage('Destroy') {
-      when {how to push a docker image in a  ec2 instance using a jenkinspipeline
-
-
+      when {
         input 'Are you sure you want to destroy infrastructure? Type "destroy" to proceed.'
       }
-      teps {
+      steps {
         withAWS(credentials: 'jenkins_aws_user') {
           sh 'terraform destroy'
         }
