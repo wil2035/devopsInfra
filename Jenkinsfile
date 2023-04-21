@@ -27,10 +27,8 @@ pipeline {
     }
 
     stage('Destroy') {
-      when {
-        input 'Are you sure you want to destroy infrastructure? Type "destroy" to proceed.'
-      }
       steps {
+        input 'Are you sure you want to destroy infrastructure? Type "destroy" to proceed.'
         withAWS(credentials: 'jenkins_aws_user') {
           sh 'terraform destroy'
         }
