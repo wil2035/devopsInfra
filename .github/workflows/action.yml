@@ -9,4 +9,4 @@ jobs:
       - name: 2nd step
         run: |
           pwd
-          mkdr step2
+          mkdir step2
