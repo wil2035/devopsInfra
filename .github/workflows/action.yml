@@ -1,0 +1,12 @@
+name: First WorkFlow
+on: workflow_dispatch
+jobs:
+  build-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1st step
+        run: echo "First step"
+      - name: 2nd step
+        run: |
+          pwd
+          mkdr step2
