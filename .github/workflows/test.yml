@@ -1,6 +1,6 @@
 name: Testing React
 run-name: ${{ github.actor }} is learning GitHub Actions
-on: push
+on: [push, workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
