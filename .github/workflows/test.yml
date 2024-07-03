@@ -8,8 +8,8 @@ on:
     - main
     - 'releases/**'
     branches-ignore:    
-      - 'mona/octocat'
-      - 'releases/**-alpha'
+    - 'mona/octocat'
+    - 'releases/**-alpha'
   workflow_dispatch:
 jobs:
   lint:
