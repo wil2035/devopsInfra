@@ -1,6 +1,16 @@
 name: Testing React
 run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push, workflow_dispatch]
+on:
+  pull_request:
+    types: [opened, reopened]
+  push:
+    branches:
+    - main
+    - 'releases/**'
+    branches-ignore:    
+      - 'mona/octocat'
+      - 'releases/**-alpha'
+  workflow_dispatch:
 jobs:
   lint:
     runs-on: ubuntu-latest
