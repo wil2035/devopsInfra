@@ -7,9 +7,9 @@ on:
     branches:
     - main
     - 'releases/**'
-    branches-ignore:    
-    - 'mona/octocat'
-    - 'releases/**-alpha'
+    # branches-ignore:    
+    # - 'mona/octocat'
+    # - 'releases/**-alpha'
   workflow_dispatch:
 jobs:
   lint:
