@@ -58,8 +58,8 @@ jobs:
             dist
             package.json
   deploy:
-    needs: test
-    #needs: [test, build2]
+    #needs: test
+    needs: [test, build]
     runs-on: ubuntu-latest
     steps:
       - name: Get code
