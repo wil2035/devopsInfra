@@ -49,7 +49,6 @@ function generarNumeroSecreto() {
     }
 }
 
-
 function verificarIntento(){
     let numeroDeUsuario = parseInt(document.getElementById('valorUsuario').value);
 
