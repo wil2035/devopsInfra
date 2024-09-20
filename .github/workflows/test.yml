@@ -42,9 +42,9 @@ jobs:
         run: npm test
   build:
     needs: test
-    runs-on: ubuntu-lastest
-    # outputs:
-    #   script-file: ${{ steps.publish.outputs.script-file }}
+    runs-on: ubuntu-latest
+    outputs:
+      script-file: ${{ steps.publish.outputs.script-file }}
     steps:
       - name: Get code
         uses: actions/checkout@v4.1.5
@@ -55,17 +55,17 @@ jobs:
       - name: Build website
         run: npm run build
       
-      # - name: Publis JS filename
-      #   id: publish
-      #   run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+      - name: Publis JS filename
+        id: publish
+        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
       
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: dist-files
-      #     path: |
-      #       dist
-      #       package.json
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: |
+            dist
+            package.json
   deploy:
     #needs: test
     needs: [test, build]
